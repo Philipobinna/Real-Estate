@@ -11,7 +11,7 @@ const hashedPassword = bcryptjs.hashSync(password, 10)
 const newUser = new User({username, email, password: hashedPassword});
 
    await newUser.save();
-  res.status(201).json({msg: "Registration successful"})
+  res.status(201).json({msg: "Successfully Registered"})
   
 } catch (error) {
  // return res.status(500).json({msg: "Registration failed", error: error.message});
@@ -30,7 +30,7 @@ try {
   if(!validPasssword) return next(errorHandler(401, "Wrong Credentials!"));
   const token = jwt.sign({ id: validUser._id}, process.env.JWT_SECRET);
   const {password: pass, ...rest} = validUser._doc;
-  res.cookie("access_token", token, {httpOnly: true}).status(200).json(rest);
+  res.cookie("access_token", token, {httpOnly: true}).status(200).json({msg: "Login successfully", rest});
 } catch (error) {
   next(error);
 }
