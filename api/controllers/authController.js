@@ -12,7 +12,7 @@ export const signup = async (req, res, next) => {
     const newUser = new User({ username, email, password: hashedPassword });
 
     await newUser.save();
-    res.status(201).json({ msg: "Successfully Registered" });
+    res.status(201).json({ msg: "Successfully Registered", newUser});
   } catch (error) {
     // return res.status(500).json({msg: "Registration failed", error: error.message});
     next(error);
@@ -59,7 +59,9 @@ try {
     res.cookie("access_token", token, {httpOnly: true}).status(200).json(rest);
   }
 } catch (error) {
-  
+  next(error);
 }
 
-}
+};
+
+
